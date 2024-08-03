@@ -2,6 +2,7 @@ import "./App.css";
 import Options from "./components/Options/Options";
 import Feedback from "./components/Feedback/Feedback";
 import Description from "./components/Description/Description";
+import Notification from "./components/Notification/Notification";
 import { useState, useEffect } from "react";
 
 function App() {
@@ -17,14 +18,15 @@ function App() {
     localStorage.setItem("feedbackValue", JSON.stringify(feedback));
   }, [feedback]);
 
-  const HappensCafé = (feedbackType) => {
+  const updateFeedback = (feedbackType) => {
     setFeedback({ ...feedback, [feedbackType]: feedback[feedbackType] + 1 });
   };
 
   const totalFeedback = feedback.good + feedback.neutral + feedback.bad;
-  const positivePer = Math.round((feedback.good / totalFeedback) * 100) || 0;
+  const positivePercentage =
+    Math.round((feedback.good / totalFeedback) * 100) || 0;
 
-  const Reset = () => {
+  const resetFeedback = () => {
     setFeedback({ good: 0, neutral: 0, bad: 0 });
   };
 
@@ -32,9 +34,9 @@ function App() {
     <div>
       <Description />
       <Options
-        HappensCafé={HappensCafé}
+        updateFeedback={updateFeedback}
         totalFeedback={totalFeedback}
-        Reset={Reset}
+        onReset={resetFeedback}
       />
       {totalFeedback > 0 ? (
         <Feedback
@@ -42,11 +44,10 @@ function App() {
           neutral={feedback.neutral}
           bad={feedback.bad}
           total={totalFeedback}
-          positive={positivePer}
-          HappensCafé={HappensCafé}
+          positive={positivePercentage}
         />
       ) : (
-        <p>No feedback given</p>
+        <Notification message="No feedback given" />
       )}
     </div>
   );

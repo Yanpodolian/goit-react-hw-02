@@ -1,22 +1,17 @@
-function Options({ HappensCafé, Reset, totalFeedback }) {
+function Options({ updateFeedback, onReset, totalFeedback }) {
   return (
     <div>
-      <button type="button" onClick={() => HappensCafé("good")}>
+      <button type="button" onClick={() => updateFeedback("good")}>
         Good
       </button>
-      <button type="button" onClick={() => HappensCafé("neutral")}>
+      <button type="button" onClick={() => updateFeedback("neutral")}>
         Neutral
       </button>
-      <button type="button" onClick={() => HappensCafé("bad")}>
+      <button type="button" onClick={() => updateFeedback("bad")}>
         Bad
       </button>
       {totalFeedback > 0 && (
-        <button
-          type="button"
-          onClick={() => {
-            Reset();
-          }}
-        >
+        <button type="button" onClick={onReset}>
           Reset
         </button>
       )}
